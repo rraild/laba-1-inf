@@ -3,10 +3,11 @@
 #include <float.h>
 #include <math.h>
 
-static void show(const char *type, long long value, size_t size)
+static void show(const char *type, long value, size_t size)
 {
-    unsigned long long bits = (unsigned long long)value;
-    printf("%-14s %12lld | %zu байт | ", type, value, size);
+    _Static_assert(LONG_MAX >= UINT_MAX, "long must hold every unsigned int");
+    unsigned long bits = (unsigned long)value;
+    printf("%-14s %12ld | %zu байт | ", type, value, size);
     for (int bit = (int)size * CHAR_BIT - 1; bit >= 0; --bit) {
         putchar(((bits >> bit) & 1u) ? '1' : '0');
         if (bit % CHAR_BIT == 0) {
